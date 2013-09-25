@@ -21,15 +21,18 @@ class UniqueUploadFilename
 
   def to_s
     return nil unless original_filename_present?
-
-    if existing_file_present?
-      "#{existing_filename}-#{suffix}.#{extension}"
-    else
-      "#{prefix}#{secure_token}-#{suffix}.#{extension}"
-    end
+    "#{full_filename}-#{suffix}.#{extension}"
   end
 
   private
+
+  def full_filename
+    if existing_file_present?
+      "#{existing_filename}"
+    else
+      "#{prefix}#{secure_token}"
+    end
+  end
 
   def secure_token
     var = :"@#{mounted_as}_secure_token"
@@ -41,8 +44,10 @@ class UniqueUploadFilename
   end
 
   def suffix
-    if present?(model.updated_at)
+    if model.respond_to?(:updated_at) && present?(model.updated_at)
       Time.parse(model.updated_at).to_i
+    else
+      Time.now.to_i
     end
   end
 

@@ -1,5 +1,9 @@
 # encoding: utf-8
 
+require 'time'
+require 'securerandom'
+require 'forwardable'
+
 class UniqueUploadFilename
   extend Forwardable
 
@@ -37,7 +41,7 @@ class UniqueUploadFilename
   end
 
   def suffix
-    if model.updated_at.present?
+    if present?(model.updated_at)
       Time.parse(model.updated_at).to_i
     end
   end
@@ -47,11 +51,11 @@ class UniqueUploadFilename
   end
 
   def original_filename_present?
-    uploader.send(:original_filename).present?
+    present?(uploader.send(:original_filename))
   end
 
   def existing_file_present?
-    existing_file_path.present?
+    present?(existing_file_path)
   end
 
   def existing_filename
@@ -60,5 +64,9 @@ class UniqueUploadFilename
 
   def existing_file_path
     model && model.attributes[mounted_as]
+  end
+
+  def present?(string)
+    string && !string.empty?
   end
 end

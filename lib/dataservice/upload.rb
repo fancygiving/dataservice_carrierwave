@@ -1,6 +1,6 @@
 require 'carrierwave/mount'
 
-module Upload
+module DataService::Upload
   include CarrierWave::Mount
 
   def mount_uploader(column, uploader=nil, options={}, &block)

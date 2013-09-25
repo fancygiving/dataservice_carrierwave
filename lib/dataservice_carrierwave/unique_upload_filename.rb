@@ -21,7 +21,7 @@ class UniqueUploadFilename
 
   def to_s
     return nil unless original_filename_present?
-    "#{full_filename}-#{suffix}.#{extension}"
+    "#{full_filename}#{suffix}.#{extension}"
   end
 
   private
@@ -45,9 +45,7 @@ class UniqueUploadFilename
 
   def suffix
     if model.respond_to?(:updated_at) && present?(model.updated_at)
-      Time.parse(model.updated_at).to_i
-    else
-      Time.now.to_i
+      '-' + Time.parse(model.updated_at).to_i.to_s
     end
   end
 

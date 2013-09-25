@@ -1,4 +1,4 @@
-require_relative '../../lib/dataservice/unique_upload_filename'
+require_relative '../../lib/dataservice_carrierwave/unique_upload_filename'
 
 describe UniqueUploadFilename do
   let(:model)    { double(attributes: {}, updated_at: '2013-09-25 13:26:20 +0100') }

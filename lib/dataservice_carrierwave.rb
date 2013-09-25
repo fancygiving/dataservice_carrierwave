@@ -1,0 +1,2 @@
+require_relative 'dataservice_carrierwave/upload'
+require_relative 'dataservice_carrierwave/unique_upload_filename'

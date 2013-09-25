@@ -1,5 +1,5 @@
 require 'carrierwave/mount'
-require_relative 'dataservice_carrierwave/unique_upload_filename'
+require 'dataservice_carrierwave/unique_upload_filename'
 
 module DataService
   module Upload

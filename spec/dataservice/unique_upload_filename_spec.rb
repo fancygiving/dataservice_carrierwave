@@ -31,7 +31,8 @@ describe UniqueUploadFilename do
 
     it 'without extension' do
       model.stub(attributes: {'photo' => '/public/AN-EXISTING-FILE-PATH-380435980.'})
-      file.stub(extension: '')
+      # simulate strange behaviour of carrierwave file class
+      file.stub(extension: 'public/gift-ideas/a061e1d9-9e9d')
       expect(filename).to eq('AN-EXISTING-FILE-PATH.')
     end
   end

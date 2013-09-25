@@ -50,7 +50,8 @@ class UniqueUploadFilename
   end
 
   def extension
-    file.extension
+    # Ignore any extension which is incorrectly formatted
+    file.extension =~ /\// ? '' : file.extension
   end
 
   def original_filename_present?

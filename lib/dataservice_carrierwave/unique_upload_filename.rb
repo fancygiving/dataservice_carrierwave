@@ -7,16 +7,17 @@ require 'forwardable'
 class UniqueUploadFilename
   extend Forwardable
 
-  def self.filename(uploader)
-    new(uploader).to_s
+  def self.filename(uploader, options={})
+    new(uploader, options).to_s
   end
 
   attr_reader :uploader, :prefix
   def_delegators :uploader, :model, :mounted_as, :file
 
   def initialize(uploader, options={})
-    @uploader = uploader
-    @prefix   = options[:prefix] || ''
+    @uploader   = uploader
+    @prefix     = options.fetch(:prefix) { '' }
+    @timestamp  = options.fetch(:timestamp) { false }
   end
 
   def to_s

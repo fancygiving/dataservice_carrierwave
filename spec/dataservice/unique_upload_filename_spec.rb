@@ -18,9 +18,16 @@ describe UniqueUploadFilename do
     expect(filename).to eq('18f0b691-928b-480f-ac04-05687c8f4bd3.jpg')
   end
 
-  it 'adds a timestamp if present on the model' do
-    model.stub(updated_at: '2013-09-25 13:26:20 +0100')
-    expect(filename).to eq('18f0b691-928b-480f-ac04-05687c8f4bd3-1380111980.jpg')
+  describe 'timestamp' do
+    it 'adds a timestamp if present on the model' do
+      model.stub(updated_at: '2013-09-25 13:26:20 +0100')
+      expect(filename).to eq('18f0b691-928b-480f-ac04-05687c8f4bd3-1380111980.jpg')
+    end
+
+    it 'does not add the timestamp if the timestamp option is false' do
+      filename = UniqueUploadFilename.filename(uploader, timestamp: false)
+      expect(filename).to eq('18f0b691-928b-480f-ac04-05687c8f4bd3.jpg')
+    end
   end
 
   describe 'with an existing filename' do

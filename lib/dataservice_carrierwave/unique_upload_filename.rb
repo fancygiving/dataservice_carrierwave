@@ -17,7 +17,7 @@ class UniqueUploadFilename
   def initialize(uploader, options={})
     @uploader   = uploader
     @prefix     = options.fetch(:prefix) { '' }
-    @timestamp  = options.fetch(:timestamp) { false }
+    @timestamp  = options.fetch(:timestamp) { true }
   end
 
   def to_s
@@ -45,7 +45,7 @@ class UniqueUploadFilename
   end
 
   def suffix
-    if model.respond_to?(:updated_at) && present?(model.updated_at)
+    if model.respond_to?(:updated_at) && present?(model.updated_at) && @timestamp
       '-' + Time.parse(model.updated_at).to_i.to_s
     end
   end

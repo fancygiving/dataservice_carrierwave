@@ -19,8 +19,9 @@ describe UniqueUploadFilename do
   end
 
   describe 'timestamp' do
+    before { model.stub(updated_at: '2013-09-25 13:26:20 +0100') }
+
     it 'adds a timestamp if present on the model' do
-      model.stub(updated_at: '2013-09-25 13:26:20 +0100')
       expect(filename).to eq('18f0b691-928b-480f-ac04-05687c8f4bd3-1380111980.jpg')
     end
 

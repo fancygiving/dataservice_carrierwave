@@ -36,18 +36,23 @@ class UniqueUploadFilename
   end
 
   def secure_token
-    var = :"@#{mounted_as}_secure_token"
-    model.instance_variable_get(var) || model.instance_variable_set(var, random_uuid)
-  end
-
-  def random_uuid
-    SecureRandom.uuid
+    fetch_model_variable(:"@#{mounted_as}_secure_token") { SecureRandom.uuid }
   end
 
   def suffix
-    if model.respond_to?(:updated_at) && present?(model.updated_at) && @timestamp
-      '-' + Time.parse(model.updated_at).to_i.to_s
-    end
+    fetch_model_variable(:"@#{mounted_as}_timestamp") { "-#{timestamp}" } if use_suffix?
+  end
+
+  def timestamp
+    Time.parse(model.updated_at).to_i.to_s
+  end
+
+  def use_suffix?
+    model.respond_to?(:updated_at) && present?(model.updated_at) && @timestamp
+  end
+
+  def fetch_model_variable(var_name)
+    model.instance_variable_get(var_name) || model.instance_variable_set(var_name, yield)
   end
 
   def extension

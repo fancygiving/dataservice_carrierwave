@@ -44,7 +44,7 @@ class UniqueUploadFilename
   end
 
   def timestamp
-    Time.parse(model.updated_at).to_i.to_s
+    Time.current.to_i
   end
 
   def use_suffix?

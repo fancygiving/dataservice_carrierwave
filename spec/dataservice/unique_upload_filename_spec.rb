@@ -8,7 +8,7 @@ describe UniqueUploadFilename do
     model:              model,
     file:               file,
     mounted_as:         'photo'}) }
-  let(:filename) { UniqueUploadFilename.filename(uploader) }
+  let(:filename) { UniqueUploadFilename.filename(uploader, timestamp: false) }
 
   before do
     SecureRandom.stub(:uuid).and_return('18f0b691-928b-480f-ac04-05687c8f4bd3')
@@ -19,9 +19,10 @@ describe UniqueUploadFilename do
   end
 
   describe 'timestamp' do
-    before { model.stub(updated_at: '2013-09-25 13:26:20 +0100') }
+    before { Time.stub(now: Time.parse('2013-09-25 13:26:20 +0100')) }
 
-    it 'adds a timestamp if present on the model' do
+    it 'adds a timestamp equal to now' do
+      filename = UniqueUploadFilename.filename(uploader)
       expect(filename).to eq('18f0b691-928b-480f-ac04-05687c8f4bd3-1380111980.jpg')
     end
 

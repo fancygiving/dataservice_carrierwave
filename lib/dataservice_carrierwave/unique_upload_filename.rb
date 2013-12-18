@@ -44,11 +44,11 @@ class UniqueUploadFilename
   end
 
   def timestamp
-    Time.current.to_i
+    Time.now.to_i
   end
 
   def use_suffix?
-    model.respond_to?(:updated_at) && present?(model.updated_at) && @timestamp
+    @timestamp
   end
 
   def fetch_model_variable(var_name)

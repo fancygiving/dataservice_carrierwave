@@ -1,4 +1,4 @@
-require 'carrierwave/mount'
+require 'carrierwave'
 require 'dataservice_carrierwave/unique_upload_filename'
 
 module DataService
@@ -24,8 +24,11 @@ module DataService
         send("#{column}=", upload)
       end
 
-      define_method(:load) do |attrs|
-        super(attrs)
+      alias :"load_without_#{column}" :load
+
+      define_method(:"load") do |attrs|
+        send(:"load_without_#{column}", attrs)
+
         if attributes[column].is_a? ActionDispatch::Http::UploadedFile
           send(:"extract_#{column}_attribute!")
         end

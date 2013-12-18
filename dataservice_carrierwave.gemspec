@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name          = 'dataservice_carrierwave'
-  s.version       = '0.1.3'
+  s.version       = '0.1.4'
   s.date          = '2013-09-25'
   s.summary       = "Utility classes to allow carrierwave to be used with dataservice remote client."
   s.description   = "Utility classes to allow carrierwave to be used with dataservice remote client."

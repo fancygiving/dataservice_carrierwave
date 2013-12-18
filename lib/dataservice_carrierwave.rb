@@ -24,7 +24,7 @@ module DataService
         send("#{column}=", upload)
       end
 
-      alias :"load_without_#{column}" :load
+      alias_method :"load_without_#{column}" :load
 
       define_method(:"load") do |attrs|
         send(:"load_without_#{column}", attrs)

@@ -32,6 +32,13 @@ describe UniqueUploadFilename do
     end
   end
 
+  describe 'prefix' do 
+    it "adds a prefix to the generated filename" do 
+      filename = UniqueUploadFilename.filename(uploader, timestamp: false, prefix: 'my-new-prefix-')
+      expect(filename).to eq('my-new-prefix-18f0b691-928b-480f-ac04-05687c8f4bd3.jpg')
+    end
+  end
+
   describe 'with an existing filename' do
     it 'reuses the existing file name' do
       model.stub(attributes: {'photo' => '/public/AN-EXISTING-FILE-PATH-380435980.jpg'})
